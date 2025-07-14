@@ -1,9 +1,9 @@
-import { Button } from '@/components/ui/button'
+import { Introduction } from '@/components/quiz/introduction'
 
 export default function Home() {
   return (
-    <div>
-      <Button className="m-4">Hello world</Button>
-    </div>
+    <>
+      <Introduction />
+    </>
   )
 }
