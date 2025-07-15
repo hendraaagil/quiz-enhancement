@@ -1,9 +1,5 @@
-import { Introduction } from '@/components/quiz/introduction'
+import Quiz from '@/components/quiz'
 
 export default function Home() {
-  return (
-    <>
-      <Introduction />
-    </>
-  )
+  return <Quiz />
 }

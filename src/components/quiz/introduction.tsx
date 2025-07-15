@@ -22,14 +22,17 @@ const expectations = [
   'Professional mathematical notation',
 ]
 
-export function Introduction() {
+export function Introduction({
+  onChangeStep,
+}: {
+  onChangeStep: (step: 'quiz' | 'results') => void
+}) {
   const [showConfirmation, setShowConfirmation] = useState(false)
   const totalEstimatedTime = 300 // 5 minutes in seconds
 
   function handleStartQuiz() {
     setShowConfirmation(false)
-    alert('Quiz timer started! You have 5 minutes to complete the quiz.')
-    // Logic to start the quiz timer can be added here
+    onChangeStep('quiz')
   }
 
   return (
