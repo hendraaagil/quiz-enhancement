@@ -11,12 +11,7 @@ import { Progress } from '@/components/ui/progress'
 import { questions } from '@/data/quiz'
 import { cn, formatTime } from '@/lib/utils'
 import { useQuizTime } from '@/hooks/use-quiz-time'
-
-type Answer = {
-  questionId: number
-  selectedAnswer: number
-  isCorrect: boolean
-}
+import { useAnswerStore } from '@/stores/answer-store'
 
 const motivationalMessages = [
   "Great start! You're doing amazing! 🌟",
@@ -27,12 +22,12 @@ const motivationalMessages = [
 ]
 
 export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
-  const { timeLeft, clearQuizTime } = useQuizTime({
+  const { addAnswer } = useAnswerStore()
+  const { timeLeft } = useQuizTime({
     onTimeUp: onGoToResults,
   })
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  const [answers, setAnswers] = useState<Answer[]>([])
 
   const question = questions[currentQuestion]
   const progress = ((currentQuestion + 1) / questions.length) * 100
@@ -44,14 +39,11 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
   function handleNextQuestion() {
     if (selectedAnswer === null) return
 
-    const newAnswer: Answer = {
-      questionId: questions[currentQuestion].id,
+    const answer = {
+      questionId: question.id,
       selectedAnswer,
-      isCorrect: selectedAnswer === questions[currentQuestion].correctAnswer,
     }
-
-    const newAnswers = [...answers, newAnswer]
-    setAnswers(newAnswers)
+    addAnswer(answer)
 
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
@@ -59,7 +51,6 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
       return
     }
 
-    clearQuizTime()
     onGoToResults()
   }
 
