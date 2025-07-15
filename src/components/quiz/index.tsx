@@ -3,6 +3,7 @@
 import { parseAsStringEnum, useQueryState } from 'nuqs'
 import { Introduction } from './introduction'
 import { Questions } from './questions'
+import { Results } from './results'
 
 export default function Quiz() {
   const [currentStep, setCurrentStep] = useQueryState(
@@ -23,7 +24,7 @@ export default function Quiz() {
   }
 
   if (currentStep === 'results') {
-    return <div className="text-center">Results will be displayed here.</div>
+    return <Results />
   }
 
   return null
