@@ -15,11 +15,15 @@ export default function Quiz() {
   }
 
   if (currentStep === 'intro') {
-    return <Introduction onChangeStep={handleChangeStep} />
+    return <Introduction onGoToQuiz={() => handleChangeStep('quiz')} />
   }
 
   if (currentStep === 'quiz') {
-    return <Questions />
+    return <Questions onGoToResults={() => handleChangeStep('results')} />
+  }
+
+  if (currentStep === 'results') {
+    return <div className="text-center">Results will be displayed here.</div>
   }
 
   return null
