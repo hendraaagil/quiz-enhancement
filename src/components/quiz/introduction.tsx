@@ -1,8 +1,9 @@
 'use client'
 
-import { CheckCircle, Clock, Target } from 'lucide-react'
+import { CheckCircle, Clock, Target, TriangleAlert } from 'lucide-react'
 import { useState } from 'react'
 
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -48,21 +49,14 @@ export function Introduction() {
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="rounded-lg bg-blue-50 p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-blue-600" />
-                <span className="font-semibold text-blue-800">
-                  Time Expectations
-                </span>
-              </div>
-              <p className="text-sm text-blue-700">
+            <Alert variant="info">
+              <Clock />
+              <AlertTitle>Time Expectations</AlertTitle>
+              <AlertDescription>
                 Estimated completion time: {Math.ceil(totalEstimatedTime / 60)}{' '}
-                minutes
-              </p>
-              <p className="mt-1 text-xs text-blue-600">
-                Take your time - accuracy is more important than speed!
-              </p>
-            </div>
+                minutes. Take your time - accuracy is more important than speed!
+              </AlertDescription>
+            </Alert>
 
             <div className="space-y-3">
               <h3 className="font-semibold text-gray-800">What to expect:</h3>
@@ -117,18 +111,17 @@ function ConfirmStartQuiz({
         <DialogHeader>
           <DialogTitle>Time Limit Warning</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-            <p className="mb-2 font-medium text-red-800">
-              ⚠️ Important Notice:
-            </p>
-            <ul className="list-disc space-y-1 pl-6 text-sm text-red-700">
+        <Alert variant="destructive">
+          <TriangleAlert />
+          <AlertTitle>Important Notice</AlertTitle>
+          <AlertDescription>
+            <ul className="list-disc space-y-1 pl-5 text-sm text-red-700">
               {importantNotices.map((notice, index) => (
                 <li key={index}>{notice}</li>
               ))}
             </ul>
-          </div>
-        </div>
+          </AlertDescription>
+        </Alert>
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline" className="flex-1">
