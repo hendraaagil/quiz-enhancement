@@ -10,10 +10,14 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+
+import { quizTimeLimit } from '@/data/quiz'
+import { useQuizTime } from '@/hooks/use-quiz-time'
 
 const expectations = [
   '5 math questions of varying difficulty',
@@ -22,66 +26,61 @@ const expectations = [
   'Professional mathematical notation',
 ]
 
-export function Introduction({
-  onChangeStep,
-}: {
-  onChangeStep: (step: 'quiz' | 'results') => void
-}) {
+export function Introduction({ onGoToQuiz }: { onGoToQuiz: () => void }) {
+  const { setStartTime } = useQuizTime()
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const totalEstimatedTime = 300 // 5 minutes in seconds
+  const totalEstimatedTime = Math.ceil(quizTimeLimit / 60)
 
   function handleStartQuiz() {
     setShowConfirmation(false)
-    onChangeStep('quiz')
+    setStartTime(Date.now())
+    onGoToQuiz()
   }
 
   return (
     <>
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        <Card className="mx-auto w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500">
-              <Target className="h-8 w-8 text-white" />
-            </div>
-            <CardTitle className="text-2xl font-bold text-gray-800">
-              Math Skills Quiz
-            </CardTitle>
-            <p className="mt-2 text-gray-600">
-              Test your mathematical abilities with 5 carefully selected
-              questions
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <Alert variant="info">
-              <Clock />
-              <AlertTitle>Time Expectations</AlertTitle>
-              <AlertDescription>
-                Estimated completion time: {Math.ceil(totalEstimatedTime / 60)}{' '}
-                minutes. Take your time - accuracy is more important than speed!
-              </AlertDescription>
-            </Alert>
+      <Card className="mx-auto w-full max-w-lg">
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500">
+            <Target className="h-8 w-8 text-white" />
+          </div>
+          <CardTitle className="text-2xl font-bold text-gray-800">
+            Math Skills Quiz
+          </CardTitle>
+          <p className="mt-2 text-gray-600">
+            Test your mathematical abilities with 5 carefully selected questions
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <Alert variant="info">
+            <Clock />
+            <AlertTitle>Time Expectations</AlertTitle>
+            <AlertDescription>
+              Estimated completion time: {totalEstimatedTime} minutes. Take your
+              time - accuracy is more important than speed!
+            </AlertDescription>
+          </Alert>
 
-            <div className="space-y-3">
-              <h3 className="font-semibold text-gray-800">What to expect:</h3>
-              <ul className="space-y-2 text-sm text-gray-600">
-                {expectations.map((expectation, index) => (
-                  <li key={index} className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-500" />
-                    {expectation}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-gray-800">What to expect:</h3>
+            <ul className="space-y-2 text-sm text-gray-600">
+              {expectations.map((expectation, index) => (
+                <li key={index} className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                  {expectation}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <Button
-              onClick={() => setShowConfirmation(true)}
-              className="w-full bg-blue-600 py-3 text-lg font-semibold text-white hover:bg-blue-700"
-            >
-              Start Quiz
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+          <Button
+            onClick={() => setShowConfirmation(true)}
+            className="w-full bg-blue-600 py-3 text-lg font-semibold text-white hover:bg-blue-700"
+          >
+            Start Quiz
+          </Button>
+        </CardContent>
+      </Card>
 
       <ConfirmStartQuiz
         show={showConfirmation}
@@ -113,6 +112,7 @@ function ConfirmStartQuiz({
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>Time Limit Warning</DialogTitle>
+          <DialogDescription />
         </DialogHeader>
         <Alert variant="destructive">
           <TriangleAlert />
