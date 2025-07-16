@@ -45,7 +45,7 @@ export function useQuizTime({
     return () => {
       clearInterval(interval)
     }
-  }, [startTime, timeLeft])
+  }, [startTime, timeLeft, onTimeUp, enableTimer])
 
   function setInitialStartTime(newStartTime: number) {
     setStartTime(newStartTime)

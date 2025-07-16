@@ -41,7 +41,7 @@ export function Results({ onRetakeQuiz }: { onRetakeQuiz: () => void }) {
       performanceColor,
       wasTimedOut,
     }
-  }, [timeLeft])
+  }, [timeLeft, getAnswerCorrections])
 
   function handleRetake() {
     clearAnswers()
@@ -183,7 +183,7 @@ export function Results({ onRetakeQuiz }: { onRetakeQuiz: () => void }) {
               <Alert variant="warning">
                 <AlertTitle>👍 Good Progress!</AlertTitle>
                 <AlertDescription>
-                  You're on the right track. Focus on practicing algebraic
+                  You&apos;re on the right track. Focus on practicing algebraic
                   manipulation and equation solving.
                 </AlertDescription>
               </Alert>
@@ -193,8 +193,8 @@ export function Results({ onRetakeQuiz }: { onRetakeQuiz: () => void }) {
               <Alert variant="destructive">
                 <AlertTitle>📚 Room for Improvement</AlertTitle>
                 <AlertDescription>
-                  Don't worry! Practice basic arithmetic, fractions, and simple
-                  algebra. Review fundamental concepts and try again.
+                  Don&apos;t worry! Practice basic arithmetic, fractions, and
+                  simple algebra. Review fundamental concepts and try again.
                 </AlertDescription>
               </Alert>
             )}

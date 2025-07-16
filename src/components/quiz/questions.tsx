@@ -43,7 +43,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
     } else {
       setSelectedAnswer(null)
     }
-  }, [currentQuestion])
+  }, [currentQuestion, answers, question.id])
 
   function handleAnswerSelect(index: number) {
     setSelectedAnswer(index)
