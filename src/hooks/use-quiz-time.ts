@@ -16,6 +16,14 @@ export function useQuizTime({
   const [timeLeft, setTimeLeft] = useState(quizTimeLimit)
 
   useEffect(() => {
+    setTimeLeft(() => {
+      const elapsedTime = Math.floor((Date.now() - startTime) / 1000)
+      const remainingTime = quizTimeLimit - elapsedTime
+      return remainingTime > 0 ? remainingTime : 0
+    })
+  }, [startTime])
+
+  useEffect(() => {
     if (!enableTimer) {
       return
     }
