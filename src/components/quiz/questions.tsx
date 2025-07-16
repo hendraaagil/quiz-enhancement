@@ -29,23 +29,20 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
   })
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  console.log('rerender Questions')
 
   const question = questions[currentQuestion]
   const progress = ((currentQuestion + 1) / questions.length) * 100
 
   function handleAnswerSelect(index: number) {
     setSelectedAnswer(index)
+    addAnswer({
+      questionId: question.id,
+      selectedAnswer: index,
+    })
   }
 
   function handleNextQuestion() {
     if (selectedAnswer === null) return
-
-    const answer = {
-      questionId: question.id,
-      selectedAnswer,
-    }
-    addAnswer(answer)
 
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
@@ -84,7 +81,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
           </div>
         </div>
         <Progress value={progress} className="mb-2 h-2" />
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between space-x-2">
           <p className="text-sm font-medium text-blue-600">
             {motivationalMessages[currentQuestion]}
           </p>

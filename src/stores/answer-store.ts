@@ -23,7 +23,17 @@ export const useAnswerStore = create<AnswerState>()(
     (set, get) => ({
       answers: [] as Answer[],
       addAnswer: (answer: Answer) =>
-        set((state) => ({ answers: [...state.answers, answer] })),
+        set((state) => {
+          const existingAnswerIndex = state.answers.findIndex(
+            (a) => a.questionId === answer.questionId,
+          )
+          if (existingAnswerIndex !== -1) {
+            const updatedAnswers = [...state.answers]
+            updatedAnswers[existingAnswerIndex] = answer
+            return { answers: updatedAnswers }
+          }
+          return { answers: [...state.answers, answer] }
+        }),
       getAnswerCorrections: () => {
         const state = get()
         return state.answers.map((answer) => {
