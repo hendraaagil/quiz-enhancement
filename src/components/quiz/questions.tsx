@@ -25,9 +25,11 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
   const { addAnswer } = useAnswerStore()
   const { timeLeft } = useQuizTime({
     onTimeUp: onGoToResults,
+    enableTimer: true,
   })
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+  console.log('rerender Questions')
 
   const question = questions[currentQuestion]
   const progress = ((currentQuestion + 1) / questions.length) * 100

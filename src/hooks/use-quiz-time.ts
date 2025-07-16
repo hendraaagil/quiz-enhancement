@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import { quizTimeLimit } from '@/data/quiz'
 
 const startTimeKey = 'quiz-start-time'
-export function useQuizTime({ onTimeUp }: { onTimeUp?: () => void } = {}) {
+export function useQuizTime({
+  onTimeUp,
+  enableTimer,
+}: { onTimeUp?: () => void; enableTimer?: boolean } = {}) {
   const [startTime, setStartTime] = useState(() => {
     const savedTime =
       typeof window !== 'undefined' ? localStorage.getItem(startTimeKey) : null
@@ -13,7 +16,10 @@ export function useQuizTime({ onTimeUp }: { onTimeUp?: () => void } = {}) {
   const [timeLeft, setTimeLeft] = useState(quizTimeLimit)
 
   useEffect(() => {
-    // TODO: only enable on quiz section
+    if (!enableTimer) {
+      return
+    }
+
     const interval = setInterval(() => {
       const elapsedTime = Math.floor((Date.now() - startTime) / 1000)
       const remainingTime = quizTimeLimit - elapsedTime
@@ -22,7 +28,6 @@ export function useQuizTime({ onTimeUp }: { onTimeUp?: () => void } = {}) {
       if (remainingTime <= 0) {
         clearInterval(interval)
         setTimeLeft(0)
-        localStorage.removeItem(startTimeKey)
         if (onTimeUp) {
           onTimeUp()
         }
