@@ -1,6 +1,6 @@
-import { questions } from '@/data/quiz'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { questions } from '@/data/quiz'
 
 export type Answer = {
   questionId: number

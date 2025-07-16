@@ -1,5 +1,5 @@
-import Quiz from '@/components/quiz'
 import { Suspense } from 'react'
+import Quiz from '@/components/quiz'
 
 export default function Home() {
   return (
