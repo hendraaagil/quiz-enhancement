@@ -1,7 +1,7 @@
 'use client'
 
 import { Clock } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -22,7 +22,7 @@ const motivationalMessages = [
 ]
 
 export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
-  const { addAnswer } = useAnswerStore()
+  const { answers, addAnswer } = useAnswerStore()
   const { timeLeft } = useQuizTime({
     onTimeUp: onGoToResults,
     enableTimer: true,
@@ -32,6 +32,18 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
 
   const question = questions[currentQuestion]
   const progress = ((currentQuestion + 1) / questions.length) * 100
+
+  useEffect(() => {
+    const existingAnswer = answers.find(
+      (answer) => answer.questionId === question.id,
+    )
+
+    if (existingAnswer) {
+      setSelectedAnswer(existingAnswer.selectedAnswer)
+    } else {
+      setSelectedAnswer(null)
+    }
+  }, [currentQuestion])
 
   function handleAnswerSelect(index: number) {
     setSelectedAnswer(index)
@@ -81,7 +93,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
           </div>
         </div>
         <Progress value={progress} className="mb-2 h-2" />
-        <div className="flex items-center justify-between space-x-2">
+        <div className="flex items-center justify-between space-x-4">
           <p className="text-sm font-medium text-blue-600">
             {motivationalMessages[currentQuestion]}
           </p>
