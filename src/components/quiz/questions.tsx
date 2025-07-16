@@ -136,7 +136,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      `flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2`,
+                      'flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2',
                       {
                         'border-blue-500 bg-blue-500': selectedAnswer === index,
                         'border-gray-300': selectedAnswer !== index,
