@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle, Clock, Target, TriangleAlert } from 'lucide-react'
+import { CheckCircle, Clock, Radical, TriangleAlert } from 'lucide-react'
 import { useState } from 'react'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -41,8 +41,8 @@ export function Introduction({ onGoToQuiz }: { onGoToQuiz: () => void }) {
     <>
       <Card className="mx-auto w-full max-w-lg">
         <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-500">
-            <Target className="h-8 w-8 text-white" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-l from-blue-500 to-blue-600">
+            <Radical className="size-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-800">
             Math Skills Quiz
@@ -75,7 +75,8 @@ export function Introduction({ onGoToQuiz }: { onGoToQuiz: () => void }) {
 
           <Button
             onClick={() => setShowConfirmation(true)}
-            className="w-full bg-blue-600 py-3 text-lg font-semibold text-white hover:bg-blue-700"
+            className="w-full"
+            size="lg"
           >
             Start Quiz
           </Button>
@@ -131,10 +132,7 @@ function ConfirmStartQuiz({
               Cancel
             </Button>
           </DialogClose>
-          <Button
-            onClick={onStart}
-            className="flex-1 bg-red-600 text-white hover:bg-red-700"
-          >
+          <Button onClick={onStart} variant="destructive" className="flex-1">
             Start Timer
           </Button>
         </DialogFooter>

@@ -149,11 +149,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
         <div className="text-sm text-gray-500">
           Progress: {Math.round(progress)}%
         </div>
-        <Button
-          onClick={handleNextQuestion}
-          disabled={selectedAnswer === null}
-          className="bg-blue-600 px-8 py-2 text-white hover:bg-blue-700"
-        >
+        <Button onClick={handleNextQuestion} disabled={selectedAnswer === null}>
           {currentQuestion === questions.length - 1
             ? 'Finish Quiz'
             : 'Next Question'}
