@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 
 import { questions } from '@/data/quiz'
-import { cn, formatTime } from '@/lib/utils'
+import { cn, formatTime, renderMathText } from '@/lib/utils'
 import { useQuizTime } from '@/hooks/use-quiz-time'
 import { useAnswerStore } from '@/stores/answer-store'
 
@@ -114,8 +114,7 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
             </span>
           </div>
           <CardTitle className="text-xl leading-relaxed text-gray-800 md:text-2xl">
-            {/* TODO: use katex renderer */}
-            {question.question}
+            {renderMathText(question.question)}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -148,8 +147,9 @@ export function Questions({ onGoToResults }: { onGoToResults: () => void }) {
                       <div className="h-2 w-2 rounded-full bg-white" />
                     )}
                   </div>
-                  {/* TODO: add katex renderer */}
-                  <span className="leading-relaxed font-medium">{option}</span>
+                  <span className="leading-relaxed font-medium">
+                    {renderMathText(option)}
+                  </span>
                 </div>
               </button>
             ))}
